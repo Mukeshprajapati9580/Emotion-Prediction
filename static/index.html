@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Emotion Reader</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>😄</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="field" aria-hidden="true">
+  <i class="orb" data-e="sadness"></i><i class="orb" data-e="joy"></i><i class="orb" data-e="love"></i>
+  <i class="orb" data-e="anger"></i><i class="orb" data-e="fear"></i><i class="orb" data-e="surprise"></i>
+  <div class="grain"></div>
+</div>
+
+<main>
+  <header>
+    <div class="status" id="status" data-state="wait"><span class="dot"></span><span id="statusText">Waking the model…</span></div>
+    <h1>How does this sentence feel?</h1>
+    <p class="lede">Write anything. A BiGRU network scores it across six emotions, and the room changes colour to match.</p>
+  </header>
+
+  <section class="grid">
+    <form id="form" class="panel spot" autocomplete="off">
+      <label for="text" class="sr">Text to analyze</label>
+      <textarea id="text" maxlength="2000" rows="6" spellcheck="false"></textarea>
+      <div class="bar">
+        <span class="count" id="count">0 / 2000</span>
+        <button type="submit" id="go" disabled><span class="btn-label">Read emotion</span><span class="spinner"></span></button>
+      </div>
+      <div class="chips" id="chips"></div>
+    </form>
+
+    <section class="panel spot result" id="result" aria-live="polite">
+      <div class="idle" id="idle">
+        <div class="float-row">
+          <span>😪</span><span>😄</span><span>❤️</span><span>😖</span><span>😨</span><span>😯</span>
+        </div>
+        <p>Your result shows up here.<br>Try an example or write your own.</p>
+      </div>
+
+      <div class="out" id="out" hidden>
+        <div class="top">
+          <div class="emoji" id="emoji"></div>
+          <div class="who">
+            <h2 id="label"></h2>
+            <p id="quote"></p>
+          </div>
+          <div class="ring">
+            <svg viewBox="0 0 120 120"><circle class="track" cx="60" cy="60" r="52"/><circle class="arc" id="arc" cx="60" cy="60" r="52"/></svg>
+            <b id="pct">0%</b>
+          </div>
+        </div>
+        <ul class="rows" id="rows"></ul>
+      </div>
+
+      <p class="error" id="error" role="alert" hidden></p>
+    </section>
+  </section>
+
+  <section class="history" id="historyWrap" hidden>
+    <h3>Recent</h3>
+    <div id="history"></div>
+  </section>
+</main>
+<script src="/static/app.js"></script>
+</body>
+</html>
