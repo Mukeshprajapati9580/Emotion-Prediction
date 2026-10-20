@@ -1,6 +1,6 @@
 (() => {
   // Same-origin when served by FastAPI; falls back to local server if opened as a file.
-  const API = location.protocol === "file:" ? "http://127.0.0.1:8000/predict" : "";
+  const API = location.protocol === "file:" ? "https://emotion-prediction-shzu.onrender.com" : "";
 
   const EMOTIONS = {
     sadness:  { emoji: "😪", color: "#5b7db1" },
