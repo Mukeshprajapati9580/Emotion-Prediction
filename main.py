@@ -1,10 +1,7 @@
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-from tensorflow.keras.preprocessing.text import Tokenizer
-from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from pydantic import BaseModel, Field
-from fastapi.responses import FileResponse
 from fastapi import FastAPI, HTTPException
 from keras.models import load_model
 import numpy as np
@@ -108,8 +105,7 @@ async def lifespan(app: FastAPI):
 
 
 """
-5. Mount the static files to the FastAPI app
-A. Enable CORS (Cross-Origin Resource Sharing) to allow requests from different origins.
+5. Enable CORS (Cross-Origin Resource Sharing) to allow requests from different origins.
 """
 
 app = FastAPI(
@@ -124,8 +120,6 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-app.mount('/static', StaticFiles(directory="static"), name="static")
-
 
 """
 6. API Endpoints.
@@ -134,10 +128,11 @@ B. Health Check Endpoint ('/health')
 C. Predict Emotion Endpoint ('/predict')
 """
 
-#A. Server UI at homepage ('/')
-@app.get('/', include_in_schema=False)
-def server_ui():
-    return FileResponse('static/index.html')
+
+#A. Root 
+@app.get('/')
+def root():
+    return {'welcome to the project'}
 
 #B. Health Check Endpoint ('/')
 @app.get('/health', response_model=HealthResponse)
